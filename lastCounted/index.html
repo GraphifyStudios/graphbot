@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <main>
+      <div id="grid">
+        <div class="channel">
+          <img
+            src="https://www.banner.yt/UCgG5aRcYGzPPB4UG3mS-ZNg/avatar"
+            width="30"
+          />
+          <span>6</span>
+        </div>
+        <div class="channel">
+          <img
+            src="https://www.banner.yt/UCgG5aRcYGzPPB4UG3mS-ZNg/avatar"
+            width="30"
+          />
+          <span>5</span>
+        </div>
+        <div class="channel">
+          <img
+            src="https://www.banner.yt/UCgG5aRcYGzPPB4UG3mS-ZNg/avatar"
+            width="30"
+          />
+          <span>4</span>
+        </div>
+        <div class="channel">
+          <img
+            src="https://www.banner.yt/UCgG5aRcYGzPPB4UG3mS-ZNg/avatar"
+            width="30"
+          />
+          <span>3</span>
+        </div>
+        <div class="channel">
+          <img
+            src="https://www.banner.yt/UCgG5aRcYGzPPB4UG3mS-ZNg/avatar"
+            width="30"
+          />
+          <span>2</span>
+        </div>
+        <div class="channel">
+          <img
+            src="https://www.banner.yt/UCgG5aRcYGzPPB4UG3mS-ZNg/avatar"
+            width="30"
+          />
+          <span>1</span>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script>
+    setInterval(() => {
+      fetch("http://localhost:1539/counting")
+        .then((res) => res.json())
+        .then(async (data) => {
+          document.getElementById("grid").innerHTML = "";
+          data.lastCounted.slice(0, 3).forEach((c, index) => {
+            let element = document.createElement("div");
+            element.id = `channel_${index}`;
+            element.classList = "channel";
+
+            let image = document.createElement("img");
+            image.src = c.avatar ?? `https://www.banner.yt/${c.id}/avatar`;
+            image.width = "30";
+
+            let count = document.createElement("span");
+            count.textContent = c.count.toLocaleString();
+
+            element.appendChild(image);
+            element.appendChild(count);
+
+            document.getElementById("grid").appendChild(element);
+          });
+          return Promise.resolve("done");
+        })
+        .catch(() => null);
+    }, 2000);
+  </script>
+</html>

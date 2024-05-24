@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./odometer.css" />
+    <script src="./odometer.js"></script>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <main>
+      <div id="grid"></div>
+    </main>
+  </body>
+  <script>
+    setInterval(() => {
+      fetch("http://localhost:1539/points/top")
+        .then((res) => res.json())
+        .then(async (channels) => {
+          channels.slice(0, 50).forEach((c, index) => {
+            const emojiOnDocument = document.getElementById(`channel_${index}`);
+            if (emojiOnDocument) {
+              emojiOnDocument.querySelector(
+                "img"
+              ).src = `https://www.banner.yt/${c.id}/avatar`;
+              emojiOnDocument.querySelector(".odometer").innerHTML = c.points;
+            } else {
+              let element = document.createElement("div");
+              element.id = `channel_${index}`;
+              element.classList = "channel";
+
+              let image = document.createElement("img");
+              image.src = `https://www.banner.yt/${c.id}/avatar`;
+
+              let odometer = document.createElement("span");
+              odometer.classList = "odometer";
+              new Odometer({
+                el: odometer,
+                value: c.points,
+              });
+
+              element.appendChild(image);
+              element.appendChild(odometer);
+
+              document.getElementById("grid").appendChild(element);
+            }
+          });
+          return Promise.resolve("done");
+        })
+        .catch(() => null);
+    }, 2000);
+  </script>
+</html>

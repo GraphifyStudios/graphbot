@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100vw;
+  height: 100vh;
+}
+
+#grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  column-gap: 10px;
+  width: 100%;
+  max-height: 100%;
+}
+
+.channel {
+  display: flex;
+  align-items: center;
+  --size: 28px;
+}
+
+.channel img {
+  width: var(--size);
+  height: var(--size);
+}
+
+.channel .odometer {
+  margin-left: 5px;
+  font-family: "Roboto";
+  font-size: calc(var(--size) - 5px);
+  line-height: 1.05em;
+}

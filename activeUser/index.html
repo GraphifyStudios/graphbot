@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <main>
+      <div class="channel">
+        <img
+          src="https://www.banner.yt/UCgG5aRcYGzPPB4UG3mS-ZNg/avatar"
+          width="50"
+        />
+        <h1 class="name">Graphify</h1>
+      </div>
+    </main>
+  </body>
+  <script>
+    setInterval(() => {
+      fetch("http://localhost:1539/active")
+        .then((res) => res.json())
+        .then((data) => {
+          const mostActive = data[0];
+          if (!data.length || mostActive.messages === 0) {
+            document.querySelector("img").src =
+              "https://www.banner.yt/UCgG5aRcYGzPPB4UG3mS-ZNg/avatar";
+            document.querySelector(".name").textContent = "Nobody";
+          }
+          document.querySelector("img").src =
+            c.avatar ?? `https://www.banner.yt/${mostActive.id}/avatar`;
+          document.querySelector(".name").textContent = mostActive.name;
+        })
+        .catch(() => null);
+    }, 2000);
+  </script>
+</html>
